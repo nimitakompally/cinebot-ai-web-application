@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- <!DOCTYPE html> tells the browser "this is a modern HTML5 page" -->
+<html lang="en">
+<head>
+  <!-- Everything in <head> is metadata - it's never shown directly on the page -->
+  <meta charset="UTF-8">
+  <title>CineBot</title>
+  <!-- The <title> is what shows up in the browser tab -->
+
+  <!-- This loads a display font from Google Fonts so the header looks like a
+       movie marquee instead of plain default text. "Bebas Neue" = poster-style
+       headline font, "Inter" = clean readable font for normal text. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- This links our separate CSS file, which controls all the colors/spacing/layout -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ── Marquee header ─────────────────────────────────────────────── -->
+  <header class="marquee">
+    <div class="marquee-lights"></div>
+    <h1>CineBot</h1>
+    <p class="tagline">Tell me what you're in the mood for tonight.</p>
+  </header>
+
+  <!-- ── Main chat area ─────────────────────────────────────────────── -->
+  <!-- This is the empty container where all chat messages get added by
+       JavaScript. It starts empty on purpose - script.js fills it in. -->
+  <main id="chat-window" class="chat-window">
+    <!-- A little starter message so the chat doesn't look empty on load -->
+    <div class="message bot">
+      <p>Hey! Describe a mood, genre, or vibe and I'll recommend 3 movies. Try something like "I want a cozy sci-fi movie."</p>
+    </div>
+  </main>
+
+  <!-- ── Message input bar (pinned to the bottom) ──────────────────── -->
+  <form id="chat-form" class="chat-form">
+    <!-- type="text" = a single-line text box the user can type into -->
+    <input
+      type="text"
+      id="user-input"
+      placeholder="What are you in the mood for?"
+      autocomplete="off"
+      required
+    >
+    <!-- type="submit" means clicking this button (or pressing Enter) submits the form -->
+    <button type="submit">Send</button>
+  </form>
+
+  <!-- This loads our JavaScript file. It's placed at the very end of <body>
+       so the HTML elements above already exist by the time the script runs. -->
+  <script src="script.js"></script>
+</body>
+</html>

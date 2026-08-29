@@ -1,0 +1,195 @@
+/* ── Design tokens ──────────────────────────────────────────────────
+   Keeping the colors/fonts as variables at the top means if you ever
+   want to re-theme the whole site, you only change these few lines
+   instead of hunting through the whole file. */
+:root {
+  --bg: #14141c;            /* near-black theater background */
+  --panel: #1e1e2a;         /* slightly lighter panel color, for chat bubbles */
+  --gold: #e8b64c;          /* marquee gold - our main accent color */
+  --rose: #c9557a;          /* dusty rose - secondary accent, used sparingly */
+  --text: #f2ede4;          /* warm off-white text, easier on the eyes than pure white */
+  --text-dim: #a9a6b0;      /* muted gray-purple for secondary text */
+  --radius: 14px;           /* corner rounding, reused everywhere for consistency */
+}
+
+/* * selects EVERY element on the page.
+   box-sizing: border-box makes width/height calculations include padding
+   and border, which avoids a lot of confusing sizing bugs for beginners. */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  /* Flexbox with column direction stacks header, chat, and input vertically */
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 100% of the visible browser window height */
+}
+
+/* ── Marquee header ─────────────────────────────────────────────── */
+.marquee {
+  position: relative;
+  text-align: center;
+  padding: 28px 16px 20px;
+  background: linear-gradient(180deg, #1a1a26, var(--bg));
+  border-bottom: 2px solid var(--gold);
+  overflow: hidden;
+}
+
+/* A row of small gold "bulbs" across the top, like a real theater marquee.
+   This is done with a repeating gradient instead of dozens of individual
+   <div> elements - one CSS rule stands in for a whole row of lights. */
+.marquee-lights {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background-image: radial-gradient(circle, var(--gold) 40%, transparent 41%);
+  background-size: 22px 22px;
+  background-position: 11px 0;
+  opacity: 0.85;
+}
+
+.marquee h1 {
+  font-family: 'Bebas Neue', sans-serif; /* poster-style display font */
+  font-size: 3rem;
+  letter-spacing: 0.08em;
+  margin: 10px 0 4px;
+  color: var(--gold);
+  text-shadow: 0 0 18px rgba(232, 182, 76, 0.35); /* soft gold glow */
+}
+
+.tagline {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+/* ── Chat window ────────────────────────────────────────────────── */
+.chat-window {
+  flex: 1; /* grow to fill all remaining vertical space between header & input */
+  overflow-y: auto; /* scroll if messages overflow the visible area */
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto; /* center the chat column on wide screens */
+}
+
+/* Shared bubble styling for every message */
+.message {
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  max-width: 80%;
+  line-height: 1.45;
+}
+
+.message p {
+  margin: 0;
+}
+
+/* Bot messages sit on the left with a dark panel background */
+.message.bot {
+  background: var(--panel);
+  align-self: flex-start;
+  border: 1px solid #2c2c3c;
+}
+
+/* User messages sit on the right in gold, like a highlighted marquee letter */
+.message.user {
+  background: var(--gold);
+  color: #1a1206;
+  align-self: flex-end;
+  font-weight: 500;
+}
+
+/* ── Movie recommendation cards (styled like ticket stubs) ─────────
+   These are the 3 movies CineBot recommends. The dashed line + circle
+   "notches" are what make it read as a ticket instead of a plain box. */
+.movie-card {
+  position: relative;
+  background: var(--panel);
+  border: 1px dashed var(--gold);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 10px;
+}
+
+.movie-card h3 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+  color: var(--gold);
+}
+
+.movie-card .meta {
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.movie-card .reason {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+/* A small loading indicator bubble shown while waiting on the API */
+.message.loading p {
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+/* ── Input bar ──────────────────────────────────────────────────── */
+.chat-form {
+  display: flex;
+  gap: 10px;
+  padding: 14px 16px;
+  background: #1a1a26;
+  border-top: 1px solid #2c2c3c;
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.chat-form input {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  border: 1px solid #33334a;
+  background: var(--panel);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.chat-form input:focus {
+  outline: 2px solid var(--gold); /* visible keyboard focus for accessibility */
+}
+
+.chat-form button {
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  border: none;
+  background: var(--rose);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chat-form button:hover {
+  filter: brightness(1.1);
+}
+
+/* ── Small screens ──────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .marquee h1 { font-size: 2.2rem; }
+  .message { max-width: 90%; }
+}

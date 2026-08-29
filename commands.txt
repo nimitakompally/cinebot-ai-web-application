@@ -1,0 +1,8 @@
+Check list of all commands:
+
+cd "~/Downloads/cinebot project"
+export GROQ_API_KEY="paste-your-key-here"
+uvicorn cinebot:app --reload
+
+To open front-end/app:
+run the index.html file 
